@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能电表控制</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .control-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        h2 {
+            margin-top: 0;
+            color: #555;
+            font-size: 18px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: inline-block;
+            width: 120px;
+            font-weight: bold;
+        }
+        input[type="number"], select {
+            padding: 5px;
+            width: 150px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .status-item {
+            margin-bottom: 5px;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>智能电表控制</h1>
+        
+        <div class="control-section">
+            <h2>基本控制</h2>
+            <div class="form-group">
+                <label>模式:</label>
+                <select id="mode">
+                    <option value="0">自动</option>
+                    <option value="1">手动</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>电源状态:</label>
+                <select id="power_state">
+                    <option value="0">关闭</option>
+                    <option value="1">开启</option>
+                </select>
+            </div>
+            <button onclick="sendControlCommand()">发送控制命令</button>
+        </div>
+        
+        <div class="control-section">
+            <h2>阈值设置</h2>
+            <div class="form-group">
+                <label>温度阈值:</label>
+                <input type="number" id="temp_max" value="40" min="0" max="100">
+                <span>°C</span>
+            </div>
+            <div class="form-group">
+                <label>湿度阈值:</label>
+                <input type="number" id="humi_max" value="80" min="0" max="100">
+                <span>%</span>
+            </div>
+            <button onclick="sendThresholdCommand()">发送阈值设置</button>
+        </div>
+        
+        <div class="control-section">
+            <h2>定时设置</h2>
+            <div class="form-group">
+                <label>小时:</label>
+                <input type="number" id="hour" value="0" min="0" max="23">
+            </div>
+            <div class="form-group">
+                <label>分钟:</label>
+                <input type="number" id="minute" value="0" min="0" max="59">
+            </div>
+            <div class="form-group">
+                <label>秒:</label>
+                <input type="number" id="sec" value="0" min="0" max="59">
+            </div>
+            <button onclick="sendTimerCommand()">发送定时设置</button>
+        </div>
+        
+        <div class="status">
+            <h2>状态信息</h2>
+            <div class="status-item">
+                <strong>连接状态:</strong> <span id="connection-status">未连接</span>
+            </div>
+            <div class="status-item">
+                <strong>上次发送:</strong> <span id="last-sent">无</span>
+            </div>
+            <div class="status-item">
+                <strong>上次接收:</strong> <span id="last-received">无</span>
+            </div>
+        </div>
+        
+        <div class="error" id="error-message"></div>
+    </div>
+    
+    <script>
+        let socket = null;
+        const HOST = '192.168.4.1';
+        const PORT = 8080;
+        
+        function connect() {
+            try {
+                socket = new WebSocket(`ws://${HOST}:${PORT}`);
+                
+                socket.onopen = function() {
+                    document.getElementById('connection-status').textContent = '已连接';
+                    document.getElementById('error-message').textContent = '';
+                };
+                
+                socket.onmessage = function(event) {
+                    document.getElementById('last-received').textContent = event.data;
+                };
+                
+                socket.onclose = function() {
+                    document.getElementById('connection-status').textContent = '已断开';
+                };
+                
+                socket.onerror = function(error) {
+                    document.getElementById('error-message').textContent = `错误: ${error.message}`;
+                };
+            } catch (error) {
+                document.getElementById('error-message').textContent = `连接失败: ${error.message}`;
+            }
+        }
+        
+        function sendCommand(command) {
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                socket.send(command);
+                document.getElementById('last-sent').textContent = command;
+            } else {
+                // 如果WebSocket连接失败，尝试使用TCP socket
+                sendTCPClientCommand(command);
+            }
+        }
+        
+        function sendTCPClientCommand(command) {
+            // 这里使用fetch API模拟TCP连接
+            // 实际使用时可能需要调整
+            fetch(`http://${HOST}:${PORT}`, {
+                method: 'POST',
+                body: command
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('last-received').textContent = data;
+                document.getElementById('last-sent').textContent = command;
+            })
+            .catch(error => {
+                document.getElementById('error-message').textContent = `发送失败: ${error.message}`;
+            });
+        }
+        
+        function sendControlCommand() {
+            const mode = document.getElementById('mode').value;
+            const power_state = document.getElementById('power_state').value;
+            const command = `mode=${mode},power_state=${power_state}`;
+            sendCommand(command);
+        }
+        
+        function sendThresholdCommand() {
+            const temp_max = document.getElementById('temp_max').value;
+            const humi_max = document.getElementById('humi_max').value;
+            const command = `mode=1,temp_max=${temp_max},humi_max=${humi_max}`;
+            sendCommand(command);
+        }
+        
+        function sendTimerCommand() {
+            const hour = document.getElementById('hour').value;
+            const minute = document.getElementById('minute').value;
+            const sec = document.getElementById('sec').value;
+            const command = `mode=1,hour=${hour},minute=${minute},sec=${sec}`;
+            sendCommand(command);
+        }
+        
+        // 页面加载时尝试连接
+        window.onload = function() {
+            connect();
+        };
+    </script>
+</body>
+</html>
