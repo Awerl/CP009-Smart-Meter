@@ -1,0 +1,280 @@
+<mxfile host="Electron" agent="Claude" pages="2">
+  <diagram name="4.2 边缘软件架构图" id="diagram-arch-42">
+    <mxGraphModel dx="800" dy="758" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title-42a" parent="1" style="text;html=1;align=center;fontSize=15;fontStyle=1;" value="图 4-3 边缘软件系统架构（应用功能 - FreeRTOS 任务 - 硬件外设 三层）" vertex="1">
+          <mxGeometry height="30" width="750" x="50" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="app-group" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontStyle=1;fontSize=13;" value="应用功能模块层" vertex="1">
+          <mxGeometry height="170" width="750" x="50" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="m-adc" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" value="ADC 采样 &amp;amp; 功率计算&#xa;（滑窗均值 N=16）" vertex="1">
+          <mxGeometry height="55" width="220" x="80" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="m-mqtt" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" value="MQTT 通信&#xa;（心跳 30s + 掉线重连）" vertex="1">
+          <mxGeometry height="55" width="220" x="315" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="m-ctrl" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" value="远程控制&#xa;（查看 / 阈值 / 开关）" vertex="1">
+          <mxGeometry height="55" width="220" x="550" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="m-protect" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;" value="中断硬保护&#xa;过载 1000-3500W ｜ 漏电 10-30mA ｜ 3 次连采确认" vertex="1">
+          <mxGeometry height="55" width="320" x="80" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="m-finger" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" value="电力指纹特征提取&#xa;200ms 周期 ｜ 6 维特征 ｜ 三档初筛" vertex="1">
+          <mxGeometry height="55" width="220" x="415" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="m-display" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" value="本地显示 + 按键&#xa;（保底通路）" vertex="1">
+          <mxGeometry height="55" width="120" x="650" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="task-group" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;fontStyle=1;fontSize=13;" value="FreeRTOS 任务调度层" vertex="1">
+          <mxGeometry height="200" width="750" x="50" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="t-protect" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" value="保护任务&#xa;（最高 P5）&#xa;ISR 协同" vertex="1">
+          <mxGeometry height="80" width="110" x="70" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="t-ctrl" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" value="控制任务&#xa;（P4）&#xa;继电器驱动" vertex="1">
+          <mxGeometry height="80" width="110" x="190" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="t-acq" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" value="采集任务&#xa;（P3）&#xa;ADC + 指纹" vertex="1">
+          <mxGeometry height="80" width="110" x="310" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="t-comm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" value="通信任务&#xa;（P2）&#xa;MQTT 收发" vertex="1">
+          <mxGeometry height="80" width="110" x="430" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="t-display" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" value="显示任务&#xa;（最低 P1）&#xa;OLED 刷新" vertex="1">
+          <mxGeometry height="80" width="110" x="550" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="kernel" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontSize=11;fontStyle=1;" value="FreeRTOS Kernel&#xa;消息队列&#xa;二值/计数信号量&#xa;任务通知" vertex="1">
+          <mxGeometry height="80" width="100" x="680" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="prio-arrow" parent="1" style="text;html=1;align=center;fontSize=11;fontStyle=2;fillColor=#fafafa;strokeColor=none;" value="优先级递减 →（保护优先 ｜ 控制次之 ｜ 通信/显示随后）" vertex="1">
+          <mxGeometry height="25" width="590" x="70" y="415" as="geometry" />
+        </mxCell>
+        <mxCell id="ipc-note" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fillColor=#eef6fb;strokeColor=#10739e;" value="任务间通过队列 / 信号量解耦：&#xa;采集 → 通信（采样数据） ｜ 通信 → 控制（命令） ｜ ISR → 控制（紧急断电） ｜ 控制 → 通信（执行回执）" vertex="1">
+          <mxGeometry height="30" width="710" x="70" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="hw-group" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;fontStyle=1;fontSize=13;" value="硬件驱动 &amp;amp; 外设层（HAL）" vertex="1">
+          <mxGeometry height="120" width="750" x="50" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="h-adc" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e6;strokeColor=#82b366;fontSize=11;" value="ADC1&#xa;PA0/PA1" vertex="1">
+          <mxGeometry height="65" width="110" x="70" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="h-tim" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e6;strokeColor=#82b366;fontSize=11;" value="TIM 定时器&#xa;采样/心跳" vertex="1">
+          <mxGeometry height="65" width="110" x="190" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="h-exti" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" value="EXTI 外部中断&#xa;过载/漏电信号" vertex="1">
+          <mxGeometry height="65" width="110" x="310" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="h-usart" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e6;strokeColor=#82b366;fontSize=11;" value="USART&#xa;ESP8266 网络" vertex="1">
+          <mxGeometry height="65" width="110" x="430" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="h-gpio" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e6;strokeColor=#82b366;fontSize=11;" value="GPIO&#xa;继电器/LED/按键" vertex="1">
+          <mxGeometry height="65" width="110" x="550" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="h-i2c" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e6;strokeColor=#82b366;fontSize=11;" value="I2C&#xa;OLED" vertex="1">
+          <mxGeometry height="65" width="110" x="670" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="layer-arrow-1" edge="1" parent="1" style="endArrow=classic;html=1;edgeStyle=none;startArrow=classic;strokeWidth=2;fontSize=11;fontStyle=2;dashed=1;dashPattern=8 4;" value="功能映射到任务">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="425" y="245" as="sourcePoint" />
+            <mxPoint x="425" y="278" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="layer-arrow-2" edge="1" parent="1" style="endArrow=classic;html=1;edgeStyle=none;startArrow=classic;strokeWidth=2;fontSize=11;fontStyle=2;dashed=1;dashPattern=8 4;" value="任务调用 HAL 驱动外设">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="425" y="488" as="sourcePoint" />
+            <mxPoint x="425" y="518" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="note-42a" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;fillColor=#fafafa;strokeColor=#999999;" value="① 中断 ISR 独立于任务调度，由 EXTI 直接触发，确保毫秒级硬保护响应；任务层只参与&quot;事后&quot;状态同步与上报。&#xa;② FreeRTOS 引入的目的不是追求复杂调度，而是在显示/通信/采样/保护并行运行时梳理结构，本设计聚焦稳定性与逻辑清晰。&#xa;③ 校准与器件误差补偿在 ADC 模块内完成，不污染上层任务逻辑。" vertex="1">
+          <mxGeometry height="75" width="750" x="50" y="660" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="4.2 边缘软件程序流程图" id="diagram-flow-42">
+    <mxGraphModel dx="1422" dy="757" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title-42b" value="图 4-4 边缘软件运行流程（三条并行路径）" style="text;html=1;align=center;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="125" y="20" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="init" value="系统启动 / 外设初始化&#xa;（ADC / USART / GPIO / EXTI / OLED）&#xa;FreeRTOS 任务创建 + 启动调度器" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="275" y="65" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="lane1-hd" value="路径 A：采集 + 上行（采集 + 通信任务）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="35" y="170" width="250" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="lane2-hd" value="路径 B：下行控制（通信 + 控制任务）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="170" width="250" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="lane3-hd" value="路径 C：硬保护 ISR（独立中断）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="565" y="170" width="250" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" value="ADC 采样&#xa;（10 ms 周期，DMA）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="220" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" value="滑动均值滤波&#xa;（窗口 N=16）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="285" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" value="计算 V / I / P&#xa;+ 累计电量 + 校准补偿" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="350" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" value="是否到达 200 ms 周期？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="415" width="200" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="a5" value="电力指纹特征提取&#xa;有效值 / 峰值 / 峰均比 / 过零点&#xa;最大突变 / 简化谐波" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="495" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a6" value="阈值初筛&#xa;→ 正常 / 可疑 / 异常" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="570" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a7" value="MQTT 发布&#xa;（状态帧 + 指纹特征 + 标签）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="635" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a-loop" value="↻ 循环回到 ADC 采样" style="text;html=1;align=center;fontSize=11;fontStyle=2;fillColor=#eef6fb;strokeColor=#10739e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="700" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b1" value="MQTT 订阅&#xa;阻塞等待下行命令" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="325" y="220" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b2" value="接收命令 + 数据帧解析" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="325" y="285" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b3" value="基础校验：&#xa;命令合法性 + 参数范围" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="325" y="350" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b4" value="校验通过？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="350" y="415" width="150" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="b5y" value="驱动继电器&#xa;（开关 / 阈值更新 / 定时配置）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="325" y="500" width="200" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="b5n" value="错误码回执" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="540" y="510" width="120" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="b6" value="MQTT 发布执行回执&#xa;（结果 + 当前状态）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="325" y="570" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-loop" value="↻ 循环等待下一条命令" style="text;html=1;align=center;fontSize=11;fontStyle=2;fillColor=#eef6fb;strokeColor=#10739e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="325" y="635" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="c1" value="EXTI 外部中断触发&#xa;（过载 / 漏电信号沿）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="220" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" value="进入 ISR&#xa;暂停低优先级任务" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="590" y="285" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="3 次连续采样确认&#xa;（过滤瞬时干扰）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="590" y="350" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="确认异常？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="615" y="415" width="150" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="c5y" value="GPIO 直接断电&#xa;（不经任务调度，毫秒级）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#7a2e2e;fontColor=#ffffff;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="500" width="200" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" value="置位状态标志&#xa;通知通信任务上报告警" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="590" y="570" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="c7" value="ISR 退出，恢复任务调度" style="text;html=1;align=center;fontSize=11;fontStyle=2;fillColor=#fbeded;strokeColor=#b85450;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="635" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ei-a" style="endArrow=classic;html=1;edgeStyle=orthogonalEdgeStyle;strokeWidth=1.5;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="init" target="a1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ei-b" style="endArrow=classic;html=1;edgeStyle=orthogonalEdgeStyle;strokeWidth=1.5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="init" target="b1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ei-c" style="endArrow=classic;html=1;edgeStyle=orthogonalEdgeStyle;strokeWidth=1.5;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="init" target="c1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea1" style="endArrow=classic;html=1;strokeWidth=1.5;" edge="1" parent="1" source="a1" target="a2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea2" style="endArrow=classic;html=1;strokeWidth=1.5;" edge="1" parent="1" source="a2" target="a3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea3" style="endArrow=classic;html=1;strokeWidth=1.5;" edge="1" parent="1" source="a3" target="a4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea4y" value="是" style="endArrow=classic;html=1;strokeWidth=1.5;fontSize=11;fontStyle=1;" edge="1" parent="1" source="a4" target="a5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea4n" value="否（仅上报状态）" style="endArrow=classic;html=1;strokeWidth=1.5;fontSize=10;fontStyle=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="a4" target="a7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="290" y="447" />
+              <mxPoint x="290" y="660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea5" style="endArrow=classic;html=1;strokeWidth=1.5;" edge="1" parent="1" source="a5" target="a6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea6" style="endArrow=classic;html=1;strokeWidth=1.5;" edge="1" parent="1" source="a6" target="a7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea7" style="endArrow=classic;html=1;strokeWidth=1.5;dashed=1;" edge="1" parent="1" source="a7" target="a-loop">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eb1" style="endArrow=classic;html=1;strokeWidth=1.5;" edge="1" parent="1" source="b1" target="b2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eb2" style="endArrow=classic;html=1;strokeWidth=1.5;" edge="1" parent="1" source="b2" target="b3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eb3" style="endArrow=classic;html=1;strokeWidth=1.5;" edge="1" parent="1" source="b3" target="b4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eb4y" value="是" style="endArrow=classic;html=1;strokeWidth=1.5;fontSize=11;fontStyle=1;" edge="1" parent="1" source="b4" target="b5y">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eb4n" value="否" style="endArrow=classic;html=1;strokeWidth=1.5;strokeColor=#b85450;fontSize=11;fontStyle=1;" edge="1" parent="1" source="b4" target="b5n">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eb5y" style="endArrow=classic;html=1;strokeWidth=1.5;" edge="1" parent="1" source="b5y" target="b6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eb5n" style="endArrow=classic;html=1;strokeWidth=1.5;strokeColor=#b85450;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="b5n" target="b6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eb6" style="endArrow=classic;html=1;strokeWidth=1.5;dashed=1;" edge="1" parent="1" source="b6" target="b-loop">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ec1" style="endArrow=classic;html=1;strokeWidth=1.5;" edge="1" parent="1" source="c1" target="c2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ec2" style="endArrow=classic;html=1;strokeWidth=1.5;" edge="1" parent="1" source="c2" target="c3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ec3" style="endArrow=classic;html=1;strokeWidth=1.5;" edge="1" parent="1" source="c3" target="c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ec4y" value="是" style="endArrow=classic;html=1;strokeWidth=2;fontSize=11;fontStyle=1;strokeColor=#b85450;" edge="1" parent="1" source="c4" target="c5y">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ec4n" value="否（瞬时干扰）" style="endArrow=classic;html=1;strokeWidth=1.5;fontSize=10;fontStyle=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="c4" target="c7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="820" y="447" />
+              <mxPoint x="820" y="650" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ec5" style="endArrow=classic;html=1;strokeWidth=1.5;" edge="1" parent="1" source="c5y" target="c6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ec6" style="endArrow=classic;html=1;strokeWidth=1.5;" edge="1" parent="1" source="c6" target="c7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cross-note" value="ISR → 通信任务（异步）：当 c6 置位告警标志后，通信任务在下一调度窗口将告警帧通过 MQTT 上报至云端。&#xa;路径 A 与 B 共享同一 MQTT 连接，由通信任务串行调度，避免并发写入冲突。" style="text;html=1;align=left;verticalAlign=top;fontSize=11;fillColor=#fafafa;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="60" y="760" width="730" height="55" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

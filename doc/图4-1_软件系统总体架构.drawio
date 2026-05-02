@@ -1,0 +1,89 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="图4-1 软件系统总体架构" id="overview">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="L1" value="&lt;b&gt;用户层&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;智能交互入口与传统控制&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontSize=13;fontColor=#085041;align=left;verticalAlign=top;spacingLeft=12;spacingTop=8;arcSize=14;strokeWidth=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="500" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="user" value="用户" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontSize=13;fontStyle=1;fontColor=#2C2C2A;arcSize=20" vertex="1" parent="1">
+          <mxGeometry x="70" y="80" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="wechat" value="&lt;b&gt;微信&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;智能交互入口&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EEEDFE;strokeColor=#534AB7;fontSize=13;fontColor=#3C3489;arcSize=20" vertex="1" parent="1">
+          <mxGeometry x="190" y="80" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="app" value="&lt;b&gt;移动 APP / 按键&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;本地控制 · 降级&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontSize=13;fontColor=#2C2C2A;arcSize=20" vertex="1" parent="1">
+          <mxGeometry x="380" y="80" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="L2" value="&lt;b&gt;云端层 (PC 主机)&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;OpenClaw 助手 + 云端 LLM API&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EEEDFE;strokeColor=#534AB7;fontSize=13;fontColor=#3C3489;align=left;verticalAlign=top;spacingLeft=12;spacingTop=8;arcSize=14;strokeWidth=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="160" width="500" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="openclaw" value="&lt;b&gt;OpenClaw 助手&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;消息桥接 · Skill 容器&lt;br/&gt;安全护栏校验&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontSize=13;fontColor=#2C2C2A;arcSize=14" vertex="1" parent="1">
+          <mxGeometry x="60" y="218" width="220" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="llm" value="&lt;b&gt;LLM Agent (云端 API)&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;意图理解 · 多步规划&lt;br/&gt;冲突检测 · 场景编排&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontSize=13;fontColor=#2C2C2A;arcSize=14" vertex="1" parent="1">
+          <mxGeometry x="300" y="218" width="220" height="68" as="geometry" />
+        </mxCell>
+
+        <mxCell id="L3" value="&lt;b&gt;边缘层 (STM32 节点)&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;本地实时控制与硬保护&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F1FB;strokeColor=#185FA5;fontSize=13;fontColor=#0C447C;align=left;verticalAlign=top;spacingLeft=12;spacingTop=8;arcSize=14;strokeWidth=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="340" width="500" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="adc" value="&lt;b&gt;数据采集&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;ADC · 温湿度&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontSize=13;fontColor=#2C2C2A;arcSize=20" vertex="1" parent="1">
+          <mxGeometry x="60" y="398" width="140" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="relay" value="&lt;b&gt;继电器控制&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;通断动作&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontSize=13;fontColor=#2C2C2A;arcSize=20" vertex="1" parent="1">
+          <mxGeometry x="220" y="398" width="140" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="protect" value="&lt;b&gt;异常保护&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;中断驱动 · 毫秒级&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAECE7;strokeColor=#993C1D;fontSize=13;fontColor=#712B13;arcSize=20;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="380" y="398" width="140" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="local" value="&lt;b&gt;本地交互&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;按键 · OLED&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontSize=13;fontColor=#2C2C2A;arcSize=20" vertex="1" parent="1">
+          <mxGeometry x="60" y="472" width="140" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="finger" value="&lt;b&gt;电力指纹&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;特征提取 · 初筛&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontSize=13;fontColor=#2C2C2A;arcSize=20" vertex="1" parent="1">
+          <mxGeometry x="220" y="472" width="140" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="mqtt" value="&lt;b&gt;MQTT 通信&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;ESP8266 网关&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontSize=13;fontColor=#2C2C2A;arcSize=20" vertex="1" parent="1">
+          <mxGeometry x="380" y="472" width="140" height="56" as="geometry" />
+        </mxCell>
+
+        <mxCell id="band_slow" value="&lt;b&gt;慢&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;秒级&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;自然语言&lt;br/&gt;推理 · 规划&lt;br/&gt;用户对话&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EEEDFE;strokeColor=#534AB7;fontSize=14;fontColor=#3C3489;arcSize=14;align=center;verticalAlign=top;spacingTop=12;opacity=70" vertex="1" parent="1">
+          <mxGeometry x="552" y="30" width="88" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="band_fast" value="&lt;b&gt;快&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;毫秒级&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;font-weight:normal&quot;&gt;硬中断&lt;br/&gt;本地保护&lt;br/&gt;手动控制&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAECE7;strokeColor=#993C1D;fontSize=14;fontColor=#712B13;arcSize=14;align=center;verticalAlign=top;spacingTop=12;opacity=70" vertex="1" parent="1">
+          <mxGeometry x="552" y="340" width="88" height="210" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a1" style="endArrow=classic;html=1;rounded=0;strokeColor=#5F5E5A;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0" edge="1" parent="1" source="user" target="wechat">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" value="自然语言消息" style="endArrow=classic;html=1;rounded=0;strokeColor=#5F5E5A;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=11;fontColor=#5F5E5A" edge="1" parent="1" source="wechat" target="L2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" style="endArrow=classic;html=1;rounded=0;startArrow=classic;startFill=1;strokeColor=#5F5E5A;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0" edge="1" parent="1" source="openclaw" target="llm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" value="Skill / MQTT 命令" style="endArrow=classic;html=1;rounded=0;strokeColor=#5F5E5A;fontSize=11;fontColor=#5F5E5A" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="200" y="300" as="sourcePoint" />
+            <mxPoint x="200" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a5" value="传感数据 / 指纹事件" style="endArrow=classic;html=1;rounded=0;strokeColor=#5F5E5A;fontSize=11;fontColor=#5F5E5A" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="340" as="sourcePoint" />
+            <mxPoint x="380" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="legend" value="异常保护用珊瑚色高亮：不依赖云端、独立完成毫秒级硬保护，是系统的安全底座" style="text;html=1;align=left;fontSize=11;fontColor=#5F5E5A;strokeColor=none;fillColor=none" vertex="1" parent="1">
+          <mxGeometry x="40" y="568" width="560" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
